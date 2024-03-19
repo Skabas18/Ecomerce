@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import Layout from '../../Components/Layaout'
-import Card from '../../Components/Card/index.jsx'
+import Card from '../../Components/Card/index.jsX';
 import axios from "axios";
 function Home() {
   const [items, setItems] = useState(null);
