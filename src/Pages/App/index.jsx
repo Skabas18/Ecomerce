@@ -1,28 +1,26 @@
-import { useRoutes, BrowserRouter } from 'react-router-dom'
-import { ShoppingCartProvider } from '../../Context'
-import Home from '../Home/index'
-import MyAccount from '../MyAccount/index'
-import MyOrder from '../MyOrder/index'
-import MyOrders from '../MyOrders/index'
-import NotFound from '../NotFound/index'
-import SignIn from '../SignIn/index'
-import Navbar from '../../Components/Navbar'
 import './App.css'
+import { Home } from '../Home'
+import { SignIn } from '../SignIn'
+import { MyOrder } from '../MyOrder'
+import { MyOrders } from '../MyOrders'
+import { NotFound } from '../NotFound'
+import { MyAccount } from '../MyAccount'
+import { Navbar } from '../../Components/Navbar'
+import { ShoppingCartProvider } from '../../Context'
+import { useRoutes, BrowserRouter } from 'react-router-dom'
 
 const AppRoutes = () => {
-  let router = useRoutes([
+  let routes = useRoutes([
     { path: '/', element: <Home /> },
     { path: '/my-account', element: <MyAccount /> },
     { path: '/my-order', element: <MyOrder /> },
     { path: '/my-orders', element: <MyOrders /> },
     { path: '/*', element: <NotFound /> },
     { path: '/sign-in', element: <SignIn /> },
-
-  ]);
-  return router
+  ])
+  return routes
 }
 const App = () => {
-
   return (
     <ShoppingCartProvider>
       <BrowserRouter>
@@ -33,4 +31,4 @@ const App = () => {
   )
 }
 
-export default App
+export { App }

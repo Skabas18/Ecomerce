@@ -1,10 +1,12 @@
 import React from 'react'
-import Layout from '../../Components/Layaout'
+import { Layout } from '../../Components/Layout'
 
 function NotFound() {
-  return (
-    <Layout>NotFound</Layout>
-  )
+    return (
+        <Layout className='bg-amber-100'>
+            NotFound
+        </Layout>
+    )
 }
 
-export default NotFound
+export { NotFound }
