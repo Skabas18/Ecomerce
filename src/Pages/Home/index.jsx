@@ -1,7 +1,8 @@
+import axios from 'axios';
 import { useState, useEffect } from 'react'
 import { Card } from '../../Components/Card'
 import { Layout } from '../../Components/Layout'
-import axios from 'axios';
+import { ProductDetail } from '../../Components/ProductDetail';
 function Home() {
   const [items, setItems] = useState(null);
   const baseURL = "https://fakestoreapi.com/products";
@@ -21,6 +22,7 @@ function Home() {
           ))
         }
       </div>
+      <ProductDetail />
     </Layout>
   )
 }
