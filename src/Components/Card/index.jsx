@@ -16,7 +16,6 @@ function Card(data) {
         context.setCartProducts([...context.cartProducts, productData])
         context.closeProductDetail()
         context.openCheckoutSideMenu()
-        console.log('Cart products --->', context.cartProducts);
     }
 
     return (
