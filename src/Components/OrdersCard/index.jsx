@@ -19,7 +19,7 @@ const OrdersCard = props => {
                     </li>
                 </div>
             </div>
-            <li className='flex items-center text-black text-2xl'>
+            <li className='flex items-center font-medium text-black text-2xl'>
                 <div>$ {totalPrice}</div>
                 <ArrowRightCircleIcon className='h-6 w-6 text-black ml-2' />
 
