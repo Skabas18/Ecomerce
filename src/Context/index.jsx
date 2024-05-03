@@ -1,4 +1,5 @@
-import { createContext, useState } from 'react'
+import axios from 'axios';
+import { createContext, useState, useEffect } from 'react'
 
 const ShoppingCartContext = createContext()
 
@@ -8,23 +9,33 @@ const ShoppingCartProvider = ({ children }) => {
 
     //Poduct Detail . Open/Close
     const [isPorductDetailOpen, setIsPorductDetailOpen] = useState(false);
-    const openProductDetail = () =>{ setIsPorductDetailOpen(true) }
-    const closeProductDetail = () =>{ setIsPorductDetailOpen(false) }
+    const openProductDetail = () => { setIsPorductDetailOpen(true) }
+    const closeProductDetail = () => { setIsPorductDetailOpen(false) }
 
     //Checkout Side Menu . Open/Close
     const [isCheckoutSideMenuOpen, setIsCheckoutSideMenuOpen] = useState(false);
-    const openCheckoutSideMenu = () =>{ setIsCheckoutSideMenuOpen(true) }
-    const closeCheckoutSideMenu = () =>{ setIsCheckoutSideMenuOpen(false) }
-    
+    const openCheckoutSideMenu = () => { setIsCheckoutSideMenuOpen(true) }
+    const closeCheckoutSideMenu = () => { setIsCheckoutSideMenuOpen(false) }
+
     //Poduct Detail . Show product
     const [productToShow, setProductToShow] = useState({})
-    
+
     //Shopping Cart . Add products to cart
-    const [cartProducts, setCartProducts]= useState([])
+    const [cartProducts, setCartProducts] = useState([])
 
     //Shopping Cart . Order
-    const [order, setOrder]= useState([])
+    const [order, setOrder] = useState([])
 
+    //Get products
+    const [items, setItems] = useState(null);
+
+    const baseURL = "https://fakestoreapi.com/products";
+    useEffect(() => {
+        axios.get(baseURL)
+            .then((response) => {
+                setItems(response.data)
+            })
+    }, [])
 
     return (
         <ShoppingCartContext.Provider value={{
@@ -41,11 +52,13 @@ const ShoppingCartProvider = ({ children }) => {
             openCheckoutSideMenu,
             closeCheckoutSideMenu,
             order,
-            setOrder
+            setOrder,
+            items,
+            setItems
         }}>
             {children}
         </ShoppingCartContext.Provider>
     )
 }
 
-export { ShoppingCartProvider ,ShoppingCartContext}
+export { ShoppingCartProvider, ShoppingCartContext }
