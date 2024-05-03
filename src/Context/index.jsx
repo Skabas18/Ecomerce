@@ -29,6 +29,10 @@ const ShoppingCartProvider = ({ children }) => {
     //Get products
     const [items, setItems] = useState(null);
 
+    //Get products by title
+    const [searchByTitle, setSearchByTitle] = useState(null);
+    console.log("searchByTitle: ", searchByTitle);
+
     const baseURL = "https://fakestoreapi.com/products";
     useEffect(() => {
         axios.get(baseURL)
@@ -54,7 +58,9 @@ const ShoppingCartProvider = ({ children }) => {
             order,
             setOrder,
             items,
-            setItems
+            setItems,
+            searchByTitle,
+            setSearchByTitle
         }}>
             {children}
         </ShoppingCartContext.Provider>

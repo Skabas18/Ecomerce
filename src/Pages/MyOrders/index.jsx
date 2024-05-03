@@ -7,7 +7,6 @@ import { OrdersCard } from '../../Components/OrdersCard'
 
 function MyOrders() {
     const context = useContext(ShoppingCartContext)
-    console.log("DATOS DE LA ORDEN",context.order)
     return (
         <Layout className='bg-amber-100'>
             <div className='flex items-center justify-center relative w-80'>
