@@ -7,7 +7,9 @@ import { ArrowLeftCircleIcon } from '@heroicons/react/24/solid'
 
 function MyOrder() {
     const context = useContext(ShoppingCartContext)
-    console.log(context.order?.slice(-1)[0]);
+    const currentPath = window.location.pathname
+    let index = currentPath.substring(currentPath.lastIndexOf('/') + 1)
+    if (index === 'last') index = context.order?.length - 1
     return (
         <Layout>
             <div className='flex items-center justify-center relative w-80 mb-6'>
@@ -18,7 +20,7 @@ function MyOrder() {
             </div>
             <div className='flex flex-col w-80'>
                 {
-                    context.order?.slice(-1)[0].products.map(product => (
+                    context.order?.[index]?.products.map(product => (
                         <OrderCard key={product.id} id={product.id} title={product.title} imageUrl={product.image} price={product.price} />
                     )
                     )
