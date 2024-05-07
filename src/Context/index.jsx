@@ -3,7 +3,34 @@ import { createContext, useState, useEffect } from 'react'
 
 const ShoppingCartContext = createContext()
 
+const initializeLocalStorage = () => {
+    const accountInLocalStorage = localStorage.getItem('account')
+    const singOutInLocalStorage = localStorage.getItem('sign-out')
+    let parsedAccount
+    let parsedSignOut
+
+    if (!accountInLocalStorage) {
+        localStorage.setItem('account', JSON.stringify({}))
+        parsedAccount = {}
+    } else {
+        parsedAccount = JSON.parse(accountInLocalStorage)
+    }
+
+    if (!singOutInLocalStorage) {
+        localStorage.setItem('sign-out', JSON.stringify(false))
+        parsedSignOut = false
+    } else {
+        parsedSignOut = JSON.parse(singOutInLocalStorage)
+    }
+}
+
 const ShoppingCartProvider = ({ children }) => {
+    //My account
+    const [account, setAccount] = useState({})
+
+    //Sign out
+    const [signOut, setSignOut] = useState(false)
+
     //Shopping Cart . Increment quantity
     const [count, setCount] = useState(0);
 
@@ -34,7 +61,7 @@ const ShoppingCartProvider = ({ children }) => {
 
     //Get products by title
     const [searchByTitle, setSearchByTitle] = useState(null);
-    
+
     //Get products by Category
     const [searchByCategory, setSearchByCategory] = useState(null);
     console.log("SearchByCategory: ", searchByCategory);
@@ -52,30 +79,30 @@ const ShoppingCartProvider = ({ children }) => {
     }
 
     const filteredItemsByCategory = (items, searchByCategory) => {
-        console.log('items: ',items);
+        console.log('items: ', items);
         return items?.filter(item => item.category.toLowerCase().includes(searchByCategory.toLowerCase()))
     }
 
-    const filterBy = (searchType, items, searchByTitle, searchByCategory)=>{
-        if(searchType === 'BY_TITLE'){
+    const filterBy = (searchType, items, searchByTitle, searchByCategory) => {
+        if (searchType === 'BY_TITLE') {
             return filteredItemsByTitle(items, searchByTitle)
         }
-        if(searchType === 'BY_CATEGORY'){
+        if (searchType === 'BY_CATEGORY') {
             return filteredItemsByCategory(items, searchByCategory)
         }
-        if(searchType === 'BY_TITLE_AND_CATEGORY'){
+        if (searchType === 'BY_TITLE_AND_CATEGORY') {
             return filteredItemsByCategory(items, searchByCategory).filter(item => item.title.toLowerCase().includes(searchByTitle.toLowerCase()))
         }
-        if(!searchType){
+        if (!searchType) {
             return items
         }
     }
 
     useEffect(() => {
-        if (searchByTitle && searchByCategory) setFilteredItems(filterBy('BY_TITLE_AND_CATEGORY',items, searchByTitle, searchByCategory))
-        if (searchByTitle && !searchByCategory) setFilteredItems(filterBy('BY_TITLE',items, searchByTitle, searchByCategory))
-        if (!searchByTitle && searchByCategory) setFilteredItems(filterBy('BY_CATEGORY',items, searchByTitle, searchByCategory))
-        if (!searchByTitle && !searchByCategory) setFilteredItems(filterBy(null,items, searchByTitle, searchByCategory))
+        if (searchByTitle && searchByCategory) setFilteredItems(filterBy('BY_TITLE_AND_CATEGORY', items, searchByTitle, searchByCategory))
+        if (searchByTitle && !searchByCategory) setFilteredItems(filterBy('BY_TITLE', items, searchByTitle, searchByCategory))
+        if (!searchByTitle && searchByCategory) setFilteredItems(filterBy('BY_CATEGORY', items, searchByTitle, searchByCategory))
+        if (!searchByTitle && !searchByCategory) setFilteredItems(filterBy(null, items, searchByTitle, searchByCategory))
 
 
 
@@ -104,11 +131,15 @@ const ShoppingCartProvider = ({ children }) => {
             setFilteredItems,
             filteredItems,
             searchByCategory,
-            setSearchByCategory
+            setSearchByCategory,
+            account,
+            setAccount,
+            signOut,
+            setSignOut
         }}>
             {children}
         </ShoppingCartContext.Provider>
     )
 }
 
-export { ShoppingCartProvider, ShoppingCartContext }
+export { ShoppingCartProvider, ShoppingCartContext, initializeLocalStorage }
